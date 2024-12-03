@@ -112,11 +112,52 @@
     cursor: pointer;
     font-size: 1em;
     margin-top: 10px;
-}
+    }
+    /* サンプル文例の表示スタイルを追加 */
+    .example {
+        background-color: #e0f2f1; /* 青緑色の薄い背景 */
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        border: 1px solid #80cbc4;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-.speech-button:hover {
+    /* 記入例のテキストスタイル */
+    .example-text {
+        color: #00695c;
+        font-weight: normal;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    /* サンプル文例のヘッダースタイル */
+    .example-header {
+        color: #00796b;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* 選択された能力要素が変更された時のアニメーション */
+    .example {
+        transition: background-color 0.3s ease;
+    }
+
+    .example:hover {
+        background-color: #b2dfdb;
+    }
+     /* サンプル文例の表示スタイルを追加 */
+     /* 選択された能力要素が変更された時のアニメーション */
+    .example {
+        transition: background-color 0.3s ease;
+    }
+
+    .example:hover {
+        background-color: #b2dfdb;
+    }
+    .speech-button:hover {
     background-color: #1bb857;  /* ホバー時は少し濃い青に */
-}
+    }
 
     /* コンテンツエリアの下部に余白を追加してフッターと重ならないようにする */
     .container {
@@ -142,12 +183,58 @@
             min-width: auto;
         }
     }
+    /* セレクター表示の変更 */
+    .ability-selector {
+    max-width: 800px;
+    margin: 20px auto;
+    font-family: sans-serif;
+}
 
-    /* 既存のスタイルは維持 */
+.ability-selector h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+#abilitySelect {
+    width: 50%;
+    padding: 8px;
+    font-size: 16px;
+    border: 2px solid #48e750;
+    border-radius: 4px;
+    background-color: #cbe5b9; /* 青緑色の薄い背景 */
+    cursor: pointer;
+}
+
+#abilitySelect option {
+    padding: 8px;
+    font-size: 16px;
+}
+
+#abilitySelect:hover {
+    border-color: #5cca46;
+}
+
+#abilitySelect:focus {
+    outline: none;
+    border-color: #69d453;
+    box-shadow: 0 0 3px rgba(226, 74, 180, 0.2);
+}
     </style>
-</head>
-<body>
+    </head>
+    <body>
     <h1>自己PR作成サポート</h1>
+     <!-- ここに能力要素選択セクションを追加 -->
+     <div class="ability-selector">
+        <h2>プルダウンで選び自己PR要素の参考に。【サンプル文章が表示されます。】</h2>       
+        <select id="abilitySelect" onchange="updateExamples()">
+            <option value="">能力要素を選択してください</option>
+            <option value="growth">1. 向上心と粘り強さ</option>
+            <option value="proactivity">2. 主体性</option>
+            <option value="problem-solving">3. 課題解決力</option>
+            <option value="action">4. 行動力</option>
+        </select>
+    </div>
 
     <!-- 使い方説明セクション -->
     <div class="instruction-section">
@@ -160,62 +247,84 @@
 
     <!-- 既存のコンテンツ -->
     <div class="container">
-        <!-- 既存のセクション内容 -->
-         <div class="container">
+        
         <div class="section">
             <h2>1. 自己ＰＲを４０文字以内で表現しましょう</h2>
             <p>自己ＰＲを結論先行（ＰＲＥＰ法）でひとことで表現します。ＰＲポイントは、仕事でいかせる能力要素を意識することです。</p>
-            <p class="example">【記入例】「プログラミングの学習で発揮した向上心と粘り強さです。」</p>
+            <div class="example">
+                <div class="example-header">【記入例】</div>
+                <p class="example-text" id="example-prpoint"></p>
+            </div>
             <textarea id="issue-prpoint" placeholder="ここに書きましょう..." data-section-title="1. 自己ＰＲ" rows="4" style="width: 100%;"></textarea>
             <div class="char-count" id="issue-prpoint-count">文字数: 0</div>
             <button class="speech-button" onclick="toggleSpeech(this, '自己PRのポイントを一言で表現します。例えば、「プログラミングの学習で発揮した向上しんと粘り強さです。というように、具体的な経験と、そこから得られた強みを結びつけてひとことで結論選考で表現してください。')">書き方のポイント読み上げ</button>
         </div>
-
+        
+        <!-- セクション2: 強みを発揮した具体的な場面 -->
         <div class="section">
             <h2>2. 強みを発揮した具体的な場面</h2>
             <p>あなたの強みが最も発揮された具体的な経験や場面を詳しく説明しましょう。</p>
-            <p class="example">【記入例】「この力を具体的に発揮したのは、独学でPythonを学習した時です。特に機械学習の課題に直面した際に何とか力をつけたいと頑張りました。」</p>
-            <textarea id="issue-awareness" placeholder="ここに書きましょう..." data-section-title="2. 強みを発揮した具体的な場面"rows="4" style="width: 100%;"></textarea>
+            <div class="example">
+                <div class="example-header">【記入例】</div>
+                <p class="example-text" id="example-awareness"></p>
+            </div>
+            <textarea id="issue-awareness" placeholder="ここに書きましょう..." data-section-title="2. 強みを発揮した具体的な場面" rows="4" style="width: 100%;"></textarea>
             <div class="char-count" id="issue-awareness-count">文字数: 0</div>
             <button class="speech-button" onclick="toggleSpeech(this, 'つぎに強みを発揮した具体的な場面を説明します。いつ、どこで、どのような状況で、その強みを発揮する必要があったのか、具体的に書きましょう。時期や期間、取り組んだ内容を明確に示すことで、より説得りょくのある内容になります。')">書き方のポイント読み上げ</button>
         </div>
-
+        
+        <!-- セクション3: 課題の発見と分析 -->
         <div class="section">
             <h2>3. 課題の発見と分析</h2>
             <p>その場面で直面した具体的な課題とその分析方法を説明しましょう。</p>
-            <p class="example">【記入例】「実は、取り組んでいる過程で、機械学習の基礎理論の理解が圧倒的に不足していることに気づきました。」</p>
-            <textarea id="issue-discovery" placeholder="ここに書きましょう..." data-section-title="3. 課題の発見と分析"rows="4" style="width: 100%;"></textarea>
+            <div class="example">
+                <div class="example-header">【記入例】</div>
+                <p class="example-text" id="example-discovery"></p>
+            </div>
+            <textarea id="issue-discovery" placeholder="ここに書きましょう..." data-section-title="3. 課題の発見と分析" rows="4" style="width: 100%;"></textarea>
             <div class="char-count" id="issue-discovery-count">文字数: 0</div>
             <button class="speech-button" onclick="toggleSpeech(this, '課題をどのように発見し、分析したのかを具体的に説明しましょう。何が問題だったのか、なぜその問題が重要だったのか、どのように課題を整理したのかを、順を追って説明することで、あなたの分析りょくが伝わります。')">書き方のポイント読み上げ</button>
         </div>
-
+        
+        <!-- セクション4: 主体的な取り組み -->
         <div class="section">
             <h2>4. 主体的な取り組み</h2>
             <p>課題に対して、どのような工夫や努力を自主的に行ったのかを説明しましょう。</p>
-            <p class="example">【記入例】「これを克服するために、毎日2時間の学習時間を確保しました。オンラインコミュニティでの質問や情報収集を積極的に行いながら、3ヶ月間で基礎から実践レベルまで習得しました。さらには、実データを使った演習問題に取り組み、週末には統計学の勉強会を主催し、仲間と知識を共有し合いました。」</p>
-            <textarea id="proactive-efforts" placeholder="ここに書きましょう..." data-section-title="4. 主体的な取り組み"rows="4" style="width: 100%;"></textarea>
+            <div class="example">
+                <div class="example-header">【記入例】</div>
+                <p class="example-text" id="example-proactive"></p>
+            </div>
+            <textarea id="proactive-efforts" placeholder="ここに書きましょう..." data-section-title="4. 主体的な取り組み" rows="4" style="width: 100%;"></textarea>
             <div class="char-count" id="proactive-efforts-count">文字数: 0</div>
             <button class="speech-button" onclick="toggleSpeech(this, '課題に対して、どのように主体的に取り組んだのかを具体的に説明しましょう。誰かに指示されたのではなく、自分から考えて行動したことを強調してください。工夫した点や、努力を継続できた理由なども含めると良いでしょう。')">書き方のポイント読み上げ</button>
         </div>
-
+        
+        <!-- セクション5: 解決のプロセス -->
         <div class="section">
             <h2>5. 解決のプロセス</h2>
             <p>具体的にどのような方法で課題を解決したのかを説明しましょう。</p>
-            <p class="example">【記入例】「統計学の基礎を固めた後、機械学習の実践的な課題に取り組み、小規模なプロジェクトを5つ完成させました。」</p>
-            <textarea id="solution-process" placeholder="ここに書きましょう..." data-section-title="5. 解決のプロセス"rows="4" style="width: 100%;"></textarea>
+            <div class="example">
+                <div class="example-header">【記入例】</div>
+                <p class="example-text" id="example-solution"></p>
+            </div>
+            <textarea id="solution-process" placeholder="ここに書きましょう..." data-section-title="5. 解決のプロセス" rows="4" style="width: 100%;"></textarea>
             <div class="char-count" id="solution-process-count">文字数: 0</div>
             <button class="speech-button" onclick="toggleSpeech(this, '課題解決のプロセスを具体的に説明しましょう。どのような手順で、どのような工夫をしながら解決に向かったのか、途中で直面した困難とその克服方法なども含めて説明すると、より説得力のある内容になります。')">書き方のポイント読み上げ</button>
         </div>
-
+        
+        <!-- セクション6: 結果と成長 -->
         <div class="section">
             <h2>6. 結果と成長</h2>
             <p>取り組みの成果と、そこから得られた学びや成長を説明しましょう。</p>
-            <p class="example">【記入例】「この経験を通じて、複雑な課題も段階的に分解して取り組むことの重要性を学びました。この学習方法は、今後の技術習得にも活かせると確信しています。」</p>
-            <textarea id="results-learning" placeholder="ここに書きましょう..." data-section-title="6. 結果と成長"rows="4" style="width: 100%;"></textarea>
+            <div class="example">
+                <div class="example-header">【記入例】</div>
+                <p class="example-text" id="example-results"></p>
+            </div>
+            <textarea id="results-learning" placeholder="ここに書きましょう..." data-section-title="6. 結果と成長" rows="4" style="width: 100%;"></textarea>
             <div class="char-count" id="results-learning-count">文字数: 0</div>
             <button class="speech-button" onclick="toggleSpeech(this, '最後に、取り組みの結果と、そこから得られた学びや成長について説明しましょう。具体的な成果と共に、その経験を通じて得られた気づきや、今後どのように活かしていきたいかまで含めると、より充実した内容になります。')">書き方のポイント読み上げ</button>
         </div>
-            </div>
+    </div>
 
     <!-- フッターセクション -->
      <div class="footer-section">
@@ -226,9 +335,70 @@
     </div>
 
     <script>
+        // 能力要素ごとのサンプル文例
+         const examples = {
+        growth: {
+            prpoint: "プログラミングの学習で発揮した向上心と粘り強さです。",
+            awareness: "この力を具体的に発揮したのは、独学でPythonを学習した時です。特に機械学習の課題に直面した際に何とか力をつけたいと頑張りました。",
+            discovery: "実は、取り組んでいる過程で、機械学習の基礎理論の理解が圧倒的に不足していることに気づきました。",
+            proactive: "毎日2時間の学習時間を確保し、オンラインコミュニティでの質問や情報収集を積極的に行いながら、3ヶ月間で基礎から実践レベルまで習得しました。さらには、実データを使った演習問題に取り組み、週末には統計学の勉強会を主催し、仲間と知識を共有し合いました。",
+            solution: "統計学の基礎を固めた後、機械学習の実践的な課題に取り組み、小規模なプロジェクトを5つ完成させました。",
+            results: "この経験を通じて、複雑な課題も段階的に分解して取り組むことの重要性を学びました。この学習方法は、今後の技術習得にも活かせると確信しています。"
+        },
+        proactivity: {
+            prpoint: "学園祭実行委員長として発揮した主体性と組織マネジメント力です。",
+            awareness: "前年比30%減の参加者数という課題を抱えた学園祭の実行委員長を務めることになった際、従来の運営方法を根本から見直す必要性を感じました。",
+            discovery: "アンケート調査を実施したところ、「マンネリ化」「情報発信力の不足」「地域との連携不足」という3つの主要な課題が浮かび上がりました。",
+            proactive: "まず、委員会内に「企画革新チーム」「広報戦略チーム」「地域連携チーム」の3つのプロジェクトチームを設置。各チーム5名の学生リーダーを選出し、週1回の進捗報告会を実施しました。SNSを活用した情報発信を強化し、地域の商店街や近隣の小中学校との連携イベントを新たに企画。準備期間中は毎週末、委員全員でアイデア会議を重ね、従来の企画も全面的に刷新しました。",
+            solution: "特に注力したのが地域連携で、商店街との協同企画として「まちなか学園祭」を実現。また、SNSでの情報発信を日々の準備風景も含めて強化し、学園祭に向けた盛り上がりを演出しました。",
+            results: "結果として来場者数は前年比150%を達成。SNSのフォロワー数は3倍になり、地域からも次年度以降の継続的な協力を約束していただきました。この経験から、問題意識を持って主体的に行動することの重要性と、組織を動かすためのリーダーシップの本質を学びました。"
+        },
+        "problem-solving": {
+            prpoint: "ボランティア活動で発揮した課題解決力とチームワークです。",
+            awareness: "被災地での復興支援ボランティア活動において、支援物資の仕分けと配布に大きな混乱が生じていることに気づきました。",
+            discovery: "現場調査を実施したところ、「物資の種類や数量の把握が不正確」「配布優先順位の基準が不明確」「ボランティア間の情報共有が不足」という3つの問題点が明らかになりました。",
+            proactive: "まず、支援物資のデータベースをスプレッドシートで作成し、QRコードを活用した在庫管理システムを構築。次に、地域ごとのニーズ調査を実施し、優先順位付けの明確な基準を設定。さらに、LINEグループを活用したリアルタイムの情報共有システムを導入し、100名以上のボランティアの連携を強化しました。",
+            solution: "新システムの導入により、物資の仕分け時間を50%短縮し、必要な方への配布までの時間を大幅に改善。誤配布もゼロになりました。",
+            results: "この取り組みは他の被災地支援団体からも注目され、マニュアル化して共有することで、より広域での支援活動の効率化にも貢献できました。この経験から、システマチックな問題分析と解決策の実行、そしてチーム全体での取り組みの重要性を学びました。"
+        },
+        action: {
+            prpoint: "国際交流イベントで発揮した行動力とコミュニケーション能力です。",
+            awareness: "留学生と日本人学生の交流が限られている状況を改善するため、多文化交流プロジェクト「Global Connect」を立ち上げました。",
+            discovery: "事前調査で、「言語の壁」「交流機会の不足」「文化的な誤解」が主な障壁となっていることが判明。特に、留学生の7割が日本人学生との深い交流を望んでいるにも関わらず、実現できていないことがわかりました。",
+            proactive: "週1回の文化交流会の企画・運営を開始し、「言語交換」「文化紹介」「協働プロジェクト」の3つのプログラムを展開。SNSでの告知、ポスター作成、教室の確保に加え、教職員や国際交流センターとの調整も全て自ら行動して進めました。特に力を入れたのが「協働プロジェクト」で、留学生と日本人学生が協力して地域の国際化に貢献する活動を実施しました。",
+            solution: "最初は10人程度だった参加者が、口コミとSNSでの情報拡散により、3ヶ月後には毎回50人以上が参加する人気イベントに成長。大学公認のサークルとして認定され、活動基盤も確立しました。",
+            results: "1年間で延べ500人以上が参加し、参加者の満足度調査では95%が「継続的な参加を希望する」と回答。この活動は現在も後輩たちに引き継がれ、大学の国際交流の中心的な取り組みとして定着しています。"
+        }
+    };
+
+        function updateExamples() {
+        const selected = document.getElementById('abilitySelect').value;
+        if (!selected) return;
+
+        const example = examples[selected];
+        
+        // 記入例の更新（テキストのみを更新）
+        document.getElementById('example-prpoint').textContent = example.prpoint;
+        document.getElementById('example-awareness').textContent = example.awareness;
+        document.getElementById('example-discovery').textContent = example.discovery;
+        document.getElementById('example-proactive').textContent = example.proactive;
+        document.getElementById('example-solution').textContent = example.solution;
+        document.getElementById('example-results').textContent = example.results;
+        
+        // テキストエリアの初期化（オプション）
+        document.getElementById('issue-prpoint').value = '';
+        document.getElementById('issue-awareness').value = '';
+        document.getElementById('issue-discovery').value = '';
+        document.getElementById('proactive-efforts').value = '';
+        document.getElementById('solution-process').value = '';
+        document.getElementById('results-learning').value = '';
+
+        // 文字数を更新
+        countCharacters();
+    }
         const utterances = new Map();
 
-function toggleSpeech(button, text) {
+    function toggleSpeech(button, text) {
     const rate = document.getElementById('speedControl').value;
 
     if (utterances.has(button)) {
@@ -249,7 +419,7 @@ function toggleSpeech(button, text) {
     }
 }
 
-function countCharacters() {
+    function countCharacters() {
     const textareas = document.querySelectorAll("textarea");
     let totalChars = 0;
 
@@ -266,11 +436,11 @@ function countCharacters() {
     return totalChars;
 }
 
-document.querySelectorAll("textarea").forEach((textarea) => {
+    document.querySelectorAll("textarea").forEach((textarea) => {
     textarea.addEventListener("input", countCharacters);
 });
 
-function saveText() {
+    function saveText() {
     const textareas = document.querySelectorAll("textarea");
     let content = "";
     let totalChars = 0;
